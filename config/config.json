@@ -9,19 +9,15 @@
   "test": {
     "username": "root",
     "password": "1234",
-    "database": "forum_test",
+    "database": "forum",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "logging": false
+    "dialect": "mysql"
   },
   "production": {
-    "use_env_variable": "CLEARDB_SILVER_URL"
-  },
-  "travis": {
-    "username": "travis",
-    "database": "forum_test",
+    "username": "root",
+    "password": "1234",
+    "database": "forum",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "logging": false
+    "dialect": "mysql"
   }
 }
