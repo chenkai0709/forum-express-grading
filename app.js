@@ -2,6 +2,11 @@ const express = require('express')
 const handlebars = require('express-handlebars') // html 模板套件
 const bodyParser = require('body-parser')   // body-parser 套件: 解析 request body
 const flash = require('connect-flash') // 快閃訊息 (flash message) 套件
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const session = require('express-session') // 自訂訊息並存到 session 裡
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
