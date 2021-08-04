@@ -1,6 +1,7 @@
 
 const db = require('../models')
 const Restaurant = db.Restaurant
+const User = db.User
 const fs = require('fs')
 
 const imgur = require('imgur-node-api')
@@ -56,7 +57,6 @@ const adminController = {
     // 明細
     getRestaurant: (req, res) => {
         return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => {
-            console.log(restaurant)
             return res.render('admin/restaurant', { restaurant: restaurant })
         })
     },
@@ -115,6 +115,27 @@ const adminController = {
                 restaurant.destroy()
                     .then((restaurant) => { res.redirect('/admin/restaurants') })
             })
+    },
+
+    // 作業 : 後台瀏覽使用者清單
+    getUsers: (req, res) => {
+        return User.findAll({ raw: true }).then(users => {
+            return res.render('admin/users', { users: users })
+        })
+    },
+
+    toggleAdmin: (req, res) => {
+        return User.findByPk(req.params.id)
+                .then((user) => {
+                    user.update({
+                        name: user.name,
+                        email: user.email,
+                        password: user.password,
+                        isAdmin: !user.isAdmin
+                    }).then((user) => {
+                        res.redirect('back')
+                    })
+                })
     }
 }
 

@@ -4,17 +4,21 @@ const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
+const helpers = require('../_helpers')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    // if (req.isAuthenticated()) {
+    if (helpers.ensureAuthenticated(req)) {
       return next()
     }
     res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      if (req.user.isAdmin) { 
+    // if (req.isAuthenticated()) {
+    if (helpers.ensureAuthenticated(req)) {
+      // if (req.user.isAdmin) {
+      if (helpers.getUser(req).isAdmin) { 
         return next()
       }
       return res.redirect('/')
@@ -27,16 +31,24 @@ module.exports = (app, passport) => {
 
   // 後台
   app.get('/admin', authenticatedAdmin, (req, res) => { res.redirect('/admin/restaurants') })
+  // 作業
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.put('/admin/users/:id/toggleAdmin', authenticatedAdmin, adminController.toggleAdmin)
+
   // 瀏覽
   app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
+
   // 新增
   app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
   app.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
+
   // 明細
   app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
+
   // 更新
   app.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
   app.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
+
   // 刪除
   app.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
