@@ -31,25 +31,26 @@ module.exports = (app, passport) => {
 
   // 後台
   app.get('/admin', authenticatedAdmin, (req, res) => { res.redirect('/admin/restaurants') })
-  // 作業
+
+  // 使用者權限
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
   app.put('/admin/users/:id/toggleAdmin', authenticatedAdmin, adminController.toggleAdmin)
 
-  // 瀏覽
+  // 餐廳瀏覽
   app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
 
-  // 新增
+  // 餐廳新增
   app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
   app.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
 
-  // 明細
+  // 餐廳明細
   app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
 
-  // 更新
+  // 餐廳更新
   app.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
   app.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
 
-  // 刪除
+  // 餐廳刪除
   app.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
   // 使用者註冊

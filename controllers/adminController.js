@@ -117,7 +117,7 @@ const adminController = {
             })
     },
 
-    // 作業 : 後台瀏覽使用者清單
+    // 後台使用者權限
     getUsers: (req, res) => {
         return User.findAll({ raw: true }).then(users => {
             return res.render('admin/users', { users: users })
@@ -133,7 +133,8 @@ const adminController = {
                         password: user.password,
                         isAdmin: !user.isAdmin
                     }).then((user) => {
-                        res.redirect('back')
+                        req.flash('success_messages', 'User was successfully to update')
+                        return res.redirect('/admin/users')
                     })
                 })
     }
