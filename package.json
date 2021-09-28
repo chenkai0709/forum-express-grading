@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "mocha tests --exit --recursive --timeout 5000"
+    "test": "mocha tests --exit --recursive --timeout 5000",
+    "seed": "node models/seeds"
   },
   "repository": {
     "type": "git",
