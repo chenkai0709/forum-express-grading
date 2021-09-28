@@ -16,11 +16,15 @@ const port = process.env.PORT || 3000
 
 
 // setup handlebars
-app.engine('handlebars', handlebars({ defaultLayout: 'main' })) // Handlebars 註冊樣板引擎
+app.engine('handlebars', handlebars({ 
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers')
+})) // Handlebars 註冊樣板引擎
 app.set('view engine', 'handlebars') // 設定使用 Handlebars 做為樣板引擎
 
 // setup bodyParser
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 // setup session and flash
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
@@ -44,6 +48,6 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-require('./routes')(app, passport)
+require('./routes')(app)
 
 module.exports = app
