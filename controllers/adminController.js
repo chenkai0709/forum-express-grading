@@ -8,7 +8,7 @@ const fs = require('fs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
-const adminService = require('../services/adminService')
+const adminService = require('../Services/adminService.js')
 
 const adminController = {
     // 瀏覽
