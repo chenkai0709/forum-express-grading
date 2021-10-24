@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs') // 加密套件
 const db = require('../../models')
 const User = db.User
 
@@ -9,7 +9,7 @@ const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
 
 let userController = {
-    signin: (req, res) => {
+    signIn: (req, res) => {
         // 檢查必要資料
         if (!req.body.email || !req.body.password) {
             return res.json({ status: 'error', message: "required fields didn't exist" })
@@ -27,7 +27,7 @@ let userController = {
             
             // 簽發 token
             var payload = { id: user.id }
-            var token = jwt.sign(payload, 'alpha camp')
+            var token = jwt.sign(payload, process.env.JWT_SECRET)
             return res.json({
                 status: 'success',
                 message: 'ok',
